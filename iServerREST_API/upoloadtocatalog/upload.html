@@ -1,0 +1,48 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>将本地文件上传iServer数据目录</title>
+	<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+	<!--ajaxfileupload.js�������ļ��ϴ���jQuery��� -->
+	<!--ajaxfileupload.js is the jQuery plugin to upload file -->
+	<script type="text/javascript" src="../js/ajaxfileupload.js"></script>
+	<script>
+		var destDir = "D:/data/SuperMapUDB/China/uploadtest.zip";
+		url = "http://localhost:8090/iserver/services/datacatalog/rest/datacatalog/relationship/dataimport.json?dataType=CSV&separator=,&xIndex=0&yIndex=1"
+		token = "&token=Xxn7OodWhZjXhiJCEaXG2A4Z-7mlLJ52i6hfioJkfGXQ38qavH5qTicvoc4tVFuZO32ZiJJbvnVLF4_y1uy01Q.."
+
+
+		function execute() {
+			var f = document.querySelector("#fileupload")
+			var ww =f.files[0];
+			var formFile = new FormData();
+			formFile.append("files", ww);
+			$.ajax({
+				type: "POST",
+				url: url + token,
+				data: formFile,
+				processData: false,
+				contentType: false,
+				dataType: "JSON",
+				success: function (result) {console
+					console.log("ajax success")
+					console.log(result)
+				}
+			})
+		}
+
+	</script>
+</head>
+
+<body>
+	Local file:<input id="fileupload" type="file" name="files[]"
+		data-url="http://localhost:8090/iserver/services/datacatalog/rest/datacatalog/relationship/dataimport.json"></input><br />
+	<input type="button" value="Upload" onclick="execute()" />
+	<div id="result">
+		<p id="progressP" style="display:none">Progress: <label id="progress">0%</label></p>
+	</div>
+</body>
+
+</html>

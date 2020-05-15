@@ -1,0 +1,42 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta charset="UTF-8">
+
+<head>
+	<title>登录</title>
+	<script type="text/javascript" src="../js/toJSON.js"></script>
+	<script>
+		//注意设置xmlhttp标头内容
+		url = "http://localhost:8090/iserver/services/security/login.rjson"
+		//token = "&token=Xxn7OodWhZjXhiJCEaXG2A4Z-7mlLJ52i6hfioJkfGXQ38qavH5qTicvoc4tVFuZO32ZiJJbvnVLF4_y1uy01Q.."
+		var xmlhttp = new XMLHttpRequest();
+		var request = {
+			"username": "admin",
+			"password": "123qqq123.",
+			"rememberme": "false"
+		}
+		request = toJSON(request);
+
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				//console.log(xmlhttp.responseText)
+				console.log("xmlhttp.readyState == 4 && xmlhttp.status == 200")
+			}
+		}
+		xmlhttp.open("POST", url, true);
+		xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		function execute() {
+			xmlhttp.send(request);
+		}
+	</script>
+</head>
+
+<body>
+	<input type="button" value="  登录  " onclick="execute()" />
+	<div id="result">
+		<p id="progressP" style="display:none">Progress: <label id="progress">0%</label></p>
+	</div>
+</body>
+
+</html>

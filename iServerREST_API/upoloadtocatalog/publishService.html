@@ -1,0 +1,76 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta charset="UTF-8">
+<head>
+	<title>从数据目录数据发布服务</title>
+	<script type="text/javascript" src="../js/toJSON.js"></script>
+	<script>
+		url = "http://localhost:8090/iserver/manager/datastoredata.rjson"		
+		token = "&token=Xxn7OodWhZjXhiJCEaXG2A4Z-7mlLJ52i6hfioJkfGXQ38qavH5qTicvoc4tVFuZO32ZiJJbvnVLF4_y1uy01Q.."
+		var xmlhttp = new XMLHttpRequest();
+		var request = {
+			"servicesTypes": [
+				"RESTMAP",
+				"RESTDATA"
+			],
+			"isDataEditable": true,
+			"isMultiInstance": false,
+			"instanceCount": 0,
+			"dataProviderDelayCommitSetting": null,
+			"dataurl": "http://localhost:8090/iserver/services/datacatalog/rest/datacatalog/relationship/datas/0a4e349af737129a2d52c9b4a3b4ddb4_0e9b28a8_2c94_49a3_aad6_6dd98ad69685"
+		}
+		request = toJSON(request)
+
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				//console.log(xmlhttp.responseText)
+				console.log("xmlhttp.readyState == 4 && xmlhttp.status == 200")
+			}
+		}
+		const url2 = url+token
+		xmlhttp.open("POST", encodeURI(url2), true);
+		xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		xmlhttp.setRequestHeader("Accept-Encoding", "gzip, deflate, br");
+		xmlhttp.setRequestHeader("Accept-Language", "zh-CN");
+		function execute() {
+			xmlhttp.send(request);
+		}
+
+
+
+		const loginUrl = "http://localhost:8090/iserver/services/security/login.rjson";
+		loginXmlhttp = new XMLHttpRequest();
+		let loginRequest = {
+			"username": "admin",
+			"password": "123qqq123.",
+			"rememberme": "false"
+		}
+		loginRequest = toJSON(loginRequest);
+
+		loginXmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				//console.log(xmlhttp.responseText)
+				console.log("loginXmlhttp.readyState == 4 && loginXmlhttp.status == 200")
+			}
+		}
+		loginXmlhttp.open("POST", loginUrl, true);
+		loginXmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		
+		function login() {
+			loginXmlhttp.send(loginRequest);
+		}
+
+
+	</script>
+</head>
+
+<body>
+	<input type="button" value="  登录  " onclick="login()"></input>
+	<input type="button" value="  发布服务  " onclick="execute()"></input>
+	<div id="result">
+		<p id="progressP" style="display:none">Progress: <label id="progress">0%</label></p>
+	</div>
+</body>
+
+</html>
